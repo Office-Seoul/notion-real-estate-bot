@@ -1,0 +1,17 @@
+name: 🏗️ 건축물대장 자동입력
+on:
+  workflow_dispatch:
+    inputs:
+      page_id:
+        description: '빌딩 페이지 ID'
+        required: true
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: 건축물대장 조회
+      env:
+        SEOUL_API_KEY: ${{ secrets.SEOUL_API_KEY }}
+        NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+      run: python building_bot.py "${{ github.event.inputs.page_id }}"
