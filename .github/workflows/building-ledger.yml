@@ -9,9 +9,18 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: 건축물대장 조회
+    - uses: actions/checkout@v4
+    
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: pip install requests
+    
+    - name: Run building bot
       env:
-        SEOUL_API_KEY: ${{ secrets.SEOUL_API_KEY }}
         NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        SEOUL_API_KEY: ${{ secrets.SEOUL_API_KEY }}
       run: python building_bot.py "${{ github.event.inputs.page_id }}"
