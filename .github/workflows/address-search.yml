@@ -1,0 +1,20 @@
+name: 📍 Vworld 주소검색
+on:
+  workflow_dispatch:
+    inputs:
+      page_id:
+        description: '빌딩 페이지 ID'
+        required: true
+      keyword:
+        description: '검색할 주소'
+        default: '강남구 역삼동'
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: 주소 검색 및 입력
+      env:
+        VWORLD_KEY: ${{ secrets.VWORLD_KEY }}
+        NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+      run: python address_bot.py "${{ github.event.inputs.page_id }}" "${{ github.event.inputs.keyword }}"
